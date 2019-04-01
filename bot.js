@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { ActivityTypes } = require('botbuilder');
+const { ActivityTypes, MessageFactory } = require('botbuilder');
 
 class MyBot {
     /**
@@ -18,13 +18,11 @@ class MyBot {
             for (const { name } of membersAdded ) {
                 console.log(name)
                 if (name.toLowerCase().startsWith("agent")) {
-                    await turnContext.sendActivity({
-                        text: "Welcome to the Human Handoff Middleware Example. You are currently communicating to the bot as an agent. To see a list of users waiting in the queue, message '#list' and to connect to the user at the top of the queue send '#connect'."
-                    });
+                    const reply = MessageFactory.suggestedActions(["#list", "#connect"], "Welcome to the Human Handoff Middleware Example. You are currently communicating to the bot as an agent. To see a list of users waiting in the queue, message '#list' and to connect to the user at the top of the queue send '#connect.'")
+                    await turnContext.sendActivity();
                 } else if (name === 'User') {
-                    await turnContext.sendActivity({
-                        text: "Welcome to the Human Handoff Middleware Example. You are currently communicating to the bot as a user. To connect to agent, send 'agent'."
-                    });
+                    const reply = MessageFactory.suggestedActions(["agent"], "Welcome to the Human Handoff Middleware Example. You are currently communicating to the bot as a user. To connect to agent, send 'agent.'")
+                    await turnContext.sendActivity(reply);
                 }
             }
         } else {
