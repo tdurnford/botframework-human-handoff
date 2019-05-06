@@ -1,6 +1,8 @@
 # Microsoft BotBuilder Human Handoff
 Demonstrates a simple Bot Conversation with a Human Handoff 
 
+**This is not an offical BotFramework Sample**
+
 ## Prerequisites
 - [Node.js][4] version 8.5 or higher
     ```bash
