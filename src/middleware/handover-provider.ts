@@ -38,7 +38,7 @@ export class ArrayHandoverProvider implements HandoverProvider {
   }
 
   public async findOrCreate(userReference: Partial<ConversationReference>): Promise<User> {
-    const user = this.backingStore.find(u => u.userReference.user.id === userReference.user.id);
+    const user = this.backingStore.find(u => u.userReference.conversation.id === userReference.conversation.id);
     if (user) { return user; }
     const newUser = {
       userReference,
@@ -51,7 +51,7 @@ export class ArrayHandoverProvider implements HandoverProvider {
   }
 
   public async findByAgent(agentReference: Partial<ConversationReference>): Promise<User> {
-    const user = this.backingStore.find(u => u.agentReference && u.agentReference.user.id === agentReference.user.id);
+    const user = this.backingStore.find(u => u.agentReference && u.agentReference.conversation.id === agentReference.conversation.id);
     return user;
   }
 
@@ -89,6 +89,7 @@ export class ArrayHandoverProvider implements HandoverProvider {
     const user = await this.findByAgent(agentReference);
     user.state = UserState.Bot;
     user.queueTime = null;
+    user.agentReference = null;
     return user;    
   }
 
